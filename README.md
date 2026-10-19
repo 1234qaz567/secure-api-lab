@@ -42,7 +42,7 @@ The project uses **GitHub Actions** (`.github/workflows/main.yml`) to automatica
 *[请在此处直接拖拽/粘贴你的 GitHub Actions 绿色成功截图]*
 
 **Link to the last successful pipeline run:** 
-*[请在此处粘贴你的 Actions 运行链接，例如：https://github.com/1234qaz567/secure-api-lab/actions/runs/123456789]*
+*[https://github.com/1234qaz567/secure-api-lab/actions/runs/39223456543]*
 
 ## 4. CVE Vulnerability Analysis and Remediation
 
