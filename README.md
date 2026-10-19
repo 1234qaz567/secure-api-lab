@@ -39,7 +39,8 @@ The project uses **GitHub Actions** (`.github/workflows/main.yml`) to automatica
 
 **Screenshot of successful SAST/SCA pipeline:**
 
-*[请在此处直接拖拽/粘贴你的 GitHub Actions 绿色成功截图]*
+*[<img width="1215" height="1005" alt="9d0277385a1227eacc33ae7a2e421b42" src="https://github.com/user-attachments/assets/dddc8126-b488-4914-8d8a-f277cdedad9c" />
+]*
 
 **Link to the last successful pipeline run:** 
 *[https://github.com/1234qaz567/secure-api-lab/actions/runs/39223456543]*
@@ -60,7 +61,8 @@ The project uses **GitHub Actions** (`.github/workflows/main.yml`) to automatica
 
 **Screenshot of successful exploitation:**
 
-*[请在此处直接拖拽/粘贴你终端显示 root:x:0:0 的截图]*
+*[<img width="1826" height="731" alt="b42c4a8301d8cf0e702977e072adb9d5" src="https://github.com/user-attachments/assets/d0120a74-c320-4f3d-bab3-f69edc5da269" />
+]*
 
 ### 4.3 Root Cause Analysis
 The root cause is a **path traversal (CWE-22)** logic error in the `aiohttp` framework. When a static directory is served, the framework parses the requested URL. If `follow_symlinks=True` is set, the framework follows symbolic links and relative paths (`../`) without properly verifying if the final resolved absolute path is still contained within the designated static root directory. Because this boundary check is missing, an attacker can navigate up the directory tree and access files anywhere on the filesystem that the application process has permission to read.
@@ -83,4 +85,5 @@ After applying the fix and rebuilding the Docker container, the exact same explo
 
 **Screenshot of successful remediation:**
 
-*[请在此处直接拖拽/粘贴你终端显示 404 Not Found 的截图]*
+*[<img width="2373" height="378" alt="6bd5f8f990cf9e6049699af38f4f0f1c" src="https://github.com/user-attachments/assets/7e8715c0-f80f-4aa6-ac8b-1c9e4e090f73" />
+]*
