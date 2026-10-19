@@ -38,10 +38,11 @@ The project uses **GitHub Actions** (`.github/workflows/main.yml`) to automatica
 *   **SCA (Software Composition Analysis)**: Uses **pip-audit** to scan the dependencies listed in `requirements.txt` against known vulnerability databases.
 
 **Screenshot of successful SAST/SCA pipeline:**
-*[Drag and drop your GitHub Actions Green Checkmark screenshot here]*
+
+*[请在此处直接拖拽/粘贴你的 GitHub Actions 绿色成功截图]*
 
 **Link to the last successful pipeline run:** 
-*[Insert Link to your GitHub Actions run here, e.g., https://github.com/1234qaz567/secure-api-lab/actions]*
+*[请在此处粘贴你的 Actions 运行链接，例如：https://github.com/1234qaz567/secure-api-lab/actions/runs/123456789]*
 
 ## 4. CVE Vulnerability Analysis and Remediation
 
@@ -55,3 +56,31 @@ The project uses **GitHub Actions** (`.github/workflows/main.yml`) to automatica
     ```python
     # Command used to trigger the attack
     docker exec -it aiohttp python -c "import socket; s = socket.socket(); s.connect(('127.0.0.1', 8080)); s.sendall(b'GET /static/../../../../../../../../etc/passwd HTTP/1.1\r\nHost: 127.0.0.1\r\nConnection: close\r\n\r\n'); res = b''; [res := res + chunk for chunk in iter(lambda: s.recv(4096), b'')]; print(res.decode())"
+3.  **Result**: The server returned `HTTP/1.1 200 OK` and exposed the contents of the Linux `/etc/passwd` file (`root:x:0:0:root:/root:/bin/bash...`).
+
+**Screenshot of successful exploitation:**
+
+*[请在此处直接拖拽/粘贴你终端显示 root:x:0:0 的截图]*
+
+### 4.3 Root Cause Analysis
+The root cause is a **path traversal (CWE-22)** logic error in the `aiohttp` framework. When a static directory is served, the framework parses the requested URL. If `follow_symlinks=True` is set, the framework follows symbolic links and relative paths (`../`) without properly verifying if the final resolved absolute path is still contained within the designated static root directory. Because this boundary check is missing, an attacker can navigate up the directory tree and access files anywhere on the filesystem that the application process has permission to read.
+
+### 4.4 Description of the Applied Fix
+To eliminate the vulnerability, the following changes were made to the Docker environment (`docker-compose.yml` and the `server.py` code):
+
+1.  **Upgraded the Dependency**: Updated `aiohttp` from the vulnerable version `3.9.1` to the patched version **`3.9.4`**.
+2.  **Secure Configuration**: Modified the static route definition in the application code to explicitly disable symlink following by setting `follow_symlinks=False`.
+
+```python
+# Vulnerable Code: web.static("/static", "static/", follow_symlinks=True)
+# Fixed Code:
+app.router.add_routes([web.static("/static", "./static/", follow_symlinks=False)])
+```
+### 4.5 Proof of Vulnerability Elimination
+After applying the fix and rebuilding the Docker container, the exact same exploitation command was executed again.
+
+**Result**: The server correctly rejected the malicious request, returning `HTTP/1.1 404 Not Found` and the header `Server: Python/3.11 aiohttp/3.9.4`. The `/etc/passwd` file is no longer accessible.
+
+**Screenshot of successful remediation:**
+
+*[请在此处直接拖拽/粘贴你终端显示 404 Not Found 的截图]*
