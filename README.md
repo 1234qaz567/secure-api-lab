@@ -39,10 +39,11 @@ The project uses **GitHub Actions** (`.github/workflows/main.yml`) to automatica
 
 **Screenshot of successful SAST/SCA pipeline:**
 
-*[请在此处直接拖拽/粘贴你的 GitHub Actions 绿色成功截图]*
+*<img width="1638" height="930" alt="9119f025154df3acefd40ae2097c0b21" src="https://github.com/user-attachments/assets/c0d1e8f1-54b6-4f28-b475-543f09f9be77" />
+*
 
 **Link to the last successful pipeline run:** 
-*[请在此处粘贴你的 Actions 运行链接，例如：https://github.com/1234qaz567/secure-api-lab/actions/runs/123456789]*
+*https://github.com/1234qaz567/secure-api-lab/actions/runs/39223456543*
 
 ## 4. CVE Vulnerability Analysis and Remediation
 
@@ -63,8 +64,9 @@ The project uses **GitHub Actions** (`.github/workflows/main.yml`) to automatica
    ```
 4. Result: The request bypassed the security filter and returned HTTP/1.1 200 OK, successfully accessing the protected admin page with the message "Congratulations, you are an admin!".
 
-Screenshot of successful exploitation:
-
+**Screenshot of successful exploitation:**
+*<img width="1281" height="636" alt="d1264000c027e13f669a0c03224c4957" src="https://github.com/user-attachments/assets/415cbf11-5d96-4080-8111-7aebe5e7a328" />
+*
 
 ### 4.3 Root Cause Analysis
 The root cause is a logic flaw in Spring Security's RegexRequestMatcher. When developers use a regex like /admin/.* to protect resources, the regex engine expects the path to match. However, Java's . metacharacter does not match line terminators (like \n or \r). By inserting %0a into the URL, the server decodes it to a newline character. The regex match fails, so Spring Security skips the authorization check and passes the request directly to the controller, resulting in unauthorized access.
@@ -80,4 +82,5 @@ After deploying the custom security proxy, the exact same exploitation command w
 
 **Screenshot of successful remediation:**
 
-*[请在此处直接拖拽/粘贴你刚才 403 FORBIDDEN 的截图]*
+*<img width="1191" height="261" alt="05d00c09b8275a0c185890576bae2668" src="https://github.com/user-attachments/assets/33aa5ce7-d5fd-4727-9f0b-80f06b139c7b" />
+*
