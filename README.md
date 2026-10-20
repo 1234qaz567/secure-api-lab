@@ -1,9 +1,9 @@
 # Work 1: Secure REST API Development with CI/CD and Real CVE Vulnerability Analysis
 
-**Student Name**: Ruan Hongzhe
-**Student ID**: 422810
-**HDU Number**: 23320213
-**Repository**: <https://github.com/1234qaz567/secure-api-lab>
+- **Student Name**: Ruan Hongzhe
+- **Student ID**: 422810
+- **HDU Number**: 23320213
+- **Repository**: <https://github.com/1234qaz567/secure-api-lab>
 
 ## 0. Purpose
 
