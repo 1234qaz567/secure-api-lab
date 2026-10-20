@@ -55,7 +55,7 @@ The project uses **GitHub Actions** (`.github/workflows/main.yml`) to automatica
 1. Started the vulnerable environment using Vulhub (`vulhub/spring-security:5.6.3`) via Docker Compose.
 2. Tested normal access to the protected route:
    ```bash
-   curl -i http://localhost:8081/admin
+   curl.exe -i http://localhost:8081/admin
    ```
    Result: Returned HTTP/1.1 404 (Blocked by Spring Security).
 3. Executed the bypass payload by injecting an encoded newline:
