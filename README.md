@@ -3,6 +3,7 @@
 **Student Name**: Ruan Hongzhe
 **Student ID**: 422810
 **HDU Number**: 23320213
+**Repository**: <https://github.com/1234qaz567/secure-api-lab>
 
 ## 0. Purpose
 
@@ -164,21 +165,22 @@ Design notes:
 
 ### 4.2 Screenshots of the SAST / SCA Reports
 
-**SAST (Bandit) report — artifact produced by the `sast` job:**
+**SAST (Bandit) report — the `sast` job produced `bandit-report` as a build artifact:**
 
-<img width="1200" src="<PASTE_BANDIT_ARTIFACT_SCREENSHOT_URL>" />
+<img width="900" alt="Bandit artifact" src="docs/screenshots/bandit-artifact.png" />
 
-**SCA (pip-audit) report — `sca` job log:**
+**SCA (pip-audit) report — the `sca` job log reports no known vulnerabilities:**
 
-<img width="1200" src="<PASTE_PIP_AUDIT_SCREENSHOT_URL>" />
+<img width="900" alt="pip-audit log" src="docs/screenshots/pip-audit-log.png" />
 
-**Pipeline summary — both jobs green, no warnings in Annotations:**
+**Pipeline summary — both jobs green; the only annotations are the informational
+`ubuntu-latest` migration notices, with no Node.js 20 warnings left:**
 
-<img width="1638" height="930" alt="pipeline" src="https://github.com/user-attachments/assets/c0d1e8f1-54b6-4f28-b475-543f09f9be77" />
+<img width="900" alt="Actions run summary" src="docs/screenshots/actions-summary.png" />
 
 ### 4.3 Link to the Last Successful Pipeline Run
 
-<PASTE_LATEST_SUCCESSFUL_RUN_URL>
+https://github.com/1234qaz567/secure-api-lab/actions/runs/39379760158
 
 ## 5. CVE Vulnerability Analysis and Remediation
 
@@ -329,11 +331,19 @@ $ curl.exe --path-as-is -i "http://localhost:8081/admin/%0a"
 curl: (7) Failed to connect to localhost port 8081
 ```
 
-**Screenshots of the blocked attack and of the regression test:**
+**All four payload variants are rejected by the proxy:**
 
-<img width="1200" src="<PASTE_403_SCREENSHOT_URL>" />
+<img width="900" alt="403 for all payload variants" src="docs/screenshots/cve-403.png" />
 
-<img width="1200" src="<PASTE_REGRESSION_SCREENSHOT_URL>" />
+**The rejection is produced by the proxy itself (`Server: Werkzeug`), not by the
+backend:**
+
+<img width="900" alt="403 response body" src="docs/screenshots/cve-403-body.png" />
+
+**Regression test — normal pages still respond while the protected route stays
+blocked for anonymous users:**
+
+<img width="900" alt="regression test" src="docs/screenshots/regression.png" />
 
 ## 6. Verification Summary
 
